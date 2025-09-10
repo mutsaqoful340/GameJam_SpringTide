@@ -30,6 +30,7 @@ public class EOTCycler : MonoBehaviour
             {
                 isDragging = true;
                 dragStartY = Input.mousePosition.y;
+                Debug.Log("Raycast hit EOTCycler");
             }
         }   
 
