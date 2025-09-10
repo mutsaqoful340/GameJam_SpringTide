@@ -27,6 +27,7 @@ public class HandlePlayerInput : MonoBehaviour
 
             gameInputActions.Player.TurnRight.performed += ctx => TurnRightPressed = true;
             gameInputActions.Player.TurnRight.canceled += ctx => TurnRightPressed = false;
+
         }
 
         gameInputActions.Player.Enable();
