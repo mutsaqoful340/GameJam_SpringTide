@@ -55,18 +55,18 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TurnRight"",
+                    ""name"": ""TurnLeft"",
                     ""type"": ""Button"",
-                    ""id"": ""f5fd189e-9ac2-45c0-af87-76386a11db33"",
+                    ""id"": ""0facdfd1-ac75-467b-b58d-6d6dc7a45283"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TurnLeft"",
+                    ""name"": ""TurnRight"",
                     ""type"": ""Button"",
-                    ""id"": ""30ab3dbf-e1b4-456e-9648-3c1f1bcf10cd"",
+                    ""id"": ""65b1e3ed-45d6-46ff-a143-67f61b7d5fec"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -109,23 +109,23 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""597253d6-e4c5-4ccb-8886-ff554046b65a"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TurnRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7c37eb09-4615-4395-8703-fb5e8579899c"",
+                    ""id"": ""1e427348-32d8-4711-a7dd-859d52355cb3"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TurnLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9318ff06-e90d-49e9-b999-7131e19fe138"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TurnRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -139,8 +139,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_Accelerate = m_Player.FindAction("Accelerate", throwIfNotFound: true);
         m_Player_Decelerate = m_Player.FindAction("Decelerate", throwIfNotFound: true);
-        m_Player_TurnRight = m_Player.FindAction("TurnRight", throwIfNotFound: true);
         m_Player_TurnLeft = m_Player.FindAction("TurnLeft", throwIfNotFound: true);
+        m_Player_TurnRight = m_Player.FindAction("TurnRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,8 +205,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Accelerate;
     private readonly InputAction m_Player_Decelerate;
-    private readonly InputAction m_Player_TurnRight;
     private readonly InputAction m_Player_TurnLeft;
+    private readonly InputAction m_Player_TurnRight;
     public struct PlayerActions
     {
         private @GameInputActions m_Wrapper;
@@ -214,8 +214,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Accelerate => m_Wrapper.m_Player_Accelerate;
         public InputAction @Decelerate => m_Wrapper.m_Player_Decelerate;
-        public InputAction @TurnRight => m_Wrapper.m_Player_TurnRight;
         public InputAction @TurnLeft => m_Wrapper.m_Player_TurnLeft;
+        public InputAction @TurnRight => m_Wrapper.m_Player_TurnRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -234,12 +234,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Decelerate.started += instance.OnDecelerate;
             @Decelerate.performed += instance.OnDecelerate;
             @Decelerate.canceled += instance.OnDecelerate;
-            @TurnRight.started += instance.OnTurnRight;
-            @TurnRight.performed += instance.OnTurnRight;
-            @TurnRight.canceled += instance.OnTurnRight;
             @TurnLeft.started += instance.OnTurnLeft;
             @TurnLeft.performed += instance.OnTurnLeft;
             @TurnLeft.canceled += instance.OnTurnLeft;
+            @TurnRight.started += instance.OnTurnRight;
+            @TurnRight.performed += instance.OnTurnRight;
+            @TurnRight.canceled += instance.OnTurnRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -253,12 +253,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Decelerate.started -= instance.OnDecelerate;
             @Decelerate.performed -= instance.OnDecelerate;
             @Decelerate.canceled -= instance.OnDecelerate;
-            @TurnRight.started -= instance.OnTurnRight;
-            @TurnRight.performed -= instance.OnTurnRight;
-            @TurnRight.canceled -= instance.OnTurnRight;
             @TurnLeft.started -= instance.OnTurnLeft;
             @TurnLeft.performed -= instance.OnTurnLeft;
             @TurnLeft.canceled -= instance.OnTurnLeft;
+            @TurnRight.started -= instance.OnTurnRight;
+            @TurnRight.performed -= instance.OnTurnRight;
+            @TurnRight.canceled -= instance.OnTurnRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -281,7 +281,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnAccelerate(InputAction.CallbackContext context);
         void OnDecelerate(InputAction.CallbackContext context);
-        void OnTurnRight(InputAction.CallbackContext context);
         void OnTurnLeft(InputAction.CallbackContext context);
+        void OnTurnRight(InputAction.CallbackContext context);
     }
 }
