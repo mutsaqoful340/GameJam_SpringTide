@@ -23,7 +23,7 @@ public class BoatMovement : MonoBehaviour
     public float steeringWheelTurnSpeed = 5f;    // how quickly the wheel visual catches up
 
     [Header("Collision Settings")]
-    private float afterCollisionSpeedFactor; // Speed is reduced to 50% after collision
+    //private float afterCollisionSpeedFactor; // Speed is reduced to 50% after collision
 
     public bool isBoatColliding = false;
 
@@ -36,14 +36,18 @@ public class BoatMovement : MonoBehaviour
     private float wheelAngle = 0f;         // accumulated wheel spin in degrees
     private float wheelVisualAngle = 0f;   // smoothed visual wheel angle
     private HandlePlayerInput playerInput;
+    private BoatDurability boatDurability;
+    private BoatBuoyancy boatBuoyancy;
 
     private void Awake()
     {
         playerInput = GetComponent<HandlePlayerInput>();
+        boatDurability = GetComponent<BoatDurability>();
+        boatBuoyancy = GetComponent<BoatBuoyancy>();
     }
     void Start()
     {
-        afterCollisionSpeedFactor = 1f;
+
     }
 
     void Update()
@@ -53,23 +57,6 @@ public class BoatMovement : MonoBehaviour
         HandleKeyboardSteering();
         ApplySteering();
         MoveBoat();
-    }
-
-    public void BoatStartColliding()
-    {
-        isBoatColliding = true;
-        afterCollisionSpeedFactor = 0.5f;
-    }
-
-    public void BoatColliding()
-    {
-        afterCollisionSpeedFactor = -0.2f;
-    }
-
-    public void BoatStopColliding()
-    {
-        isBoatColliding = false;
-        afterCollisionSpeedFactor = 1f;
     }
 
 
