@@ -12,29 +12,29 @@ public class BoatMovement : MonoBehaviour
     public float accelerationSpeed = 2f;
     public float rotationSpeed = 20f;
 
-    [Header("Steering Settings")]
-    public float rudderStep = 5f;          // How many degrees per key press
-    public float maxRudderAngle = 45f;     // Max left/right rudder
-    public int spinsForMaxRudder = 6;      // Number of full wheel spins required for max rudder
+    [Header("Steing Settings")]
+    public float rudderStep = 5f;
+    public float maxRudderAngle = 45f;
+    public int spinsForMaxRudder = 6;
+    public float driftTurnStrength = 0.05f;
+    public AnimationCurve driftResponseCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
     [Header("Steering Wheel")]
     public GameObject steeringWheel;
-    public float steeringWheelMultiplier = 1f;   // visual spin scale
-    public float steeringWheelTurnSpeed = 5f;    // how quickly the wheel visual catches up
+    public float steeringWheelMultiplier = 1f;
+    public float steeringWheelTurnSpeed = 5f;
 
     [Header("Collision Settings")]
-    //private float afterCollisionSpeedFactor; // Speed is reduced to 50% after collision
-
     public bool isBoatColliding = false;
 
     private float currentSpeed = 0f;
-    private float rudderAngle = 0f;        // actual rudder
+    private float rudderAngle = 0f;
     private float speedVelocity;
     private bool isDragging = false;
-    private float targetRudder;            // where the rudder *wants* to go
+    private float targetRudder;
     private float lastMouseAngle;
-    private float wheelAngle = 0f;         // accumulated wheel spin in degrees
-    private float wheelVisualAngle = 0f;   // smoothed visual wheel angle
+    private float wheelAngle = 0f;
+    private float wheelVisualAngle = 0f;
     private HandlePlayerInput playerInput;
     private BoatDurability boatDurability;
     private BoatBuoyancy boatBuoyancy;
@@ -45,10 +45,6 @@ public class BoatMovement : MonoBehaviour
         boatDurability = GetComponent<BoatDurability>();
         boatBuoyancy = GetComponent<BoatBuoyancy>();
     }
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -58,7 +54,6 @@ public class BoatMovement : MonoBehaviour
         ApplySteering();
         MoveBoat();
     }
-
 
     void HandleTelegraphInput()
     {
@@ -79,7 +74,6 @@ public class BoatMovement : MonoBehaviour
             {
                 isDragging = true;
 
-                // Record starting angle
                 Vector3 wheelScreenPos = Camera.main.WorldToScreenPoint(steeringWheel.transform.position);
                 Vector2 dir = (Vector2)(Input.mousePosition - wheelScreenPos);
                 lastMouseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -94,14 +88,11 @@ public class BoatMovement : MonoBehaviour
 
             float delta = Mathf.DeltaAngle(lastMouseAngle, currentAngle);
 
-            // Accumulate wheel rotation
             wheelAngle -= delta;
 
-            // Clamp wheel angle so rudder can't exceed max deflection
             float wheelLimit = 360f * spinsForMaxRudder;
             wheelAngle = Mathf.Clamp(wheelAngle, -wheelLimit, wheelLimit);
 
-            // Convert spins into rudder target
             float spins = wheelAngle / 360f;
             targetRudder = Mathf.Clamp(spins * (maxRudderAngle / spinsForMaxRudder),
                                     -maxRudderAngle, maxRudderAngle);
@@ -115,7 +106,6 @@ public class BoatMovement : MonoBehaviour
         }
     }
 
-
     void HandleKeyboardSteering()
     {
         if (playerInput.TurnLeftPressed)
@@ -128,16 +118,33 @@ public class BoatMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        // Rudder gradually catches up to target
         rudderAngle = Mathf.Lerp(rudderAngle, targetRudder, Time.deltaTime * 5f);
 
-        float effectiveRotation = (rudderAngle / maxRudderAngle)
-                                * rotationSpeed
-                                * (Mathf.Abs(currentSpeed) / (telegraphStepSpeed * maxAhead));
+        float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / (telegraphStepSpeed * maxAhead));
 
-        transform.Rotate(Vector3.up, effectiveRotation * Time.deltaTime);
+        if (normalizedSpeed > 0.01f)
+        {
+            float baseTurnFactor = normalizedSpeed * (1f - normalizedSpeed);
+            float dragBoost = Mathf.Abs(rudderAngle) / maxRudderAngle * (1f - normalizedSpeed);
 
-        // Smooth the visual wheel rotation
+            float effectiveTurnFactor = baseTurnFactor + dragBoost * 0.5f;
+            effectiveTurnFactor = Mathf.Clamp(effectiveTurnFactor, 0f, 1f);
+
+            float effectiveRotation = (rudderAngle / maxRudderAngle)
+                                    * rotationSpeed
+                                    * effectiveTurnFactor;
+
+            transform.Rotate(Vector3.up, effectiveRotation * Time.deltaTime);
+        }
+        else if (Mathf.Abs(rudderAngle) > 1f)
+        {
+            float rudderDeflection = Mathf.Abs(rudderAngle) / maxRudderAngle;
+            float curveScale = driftResponseCurve.Evaluate(rudderDeflection);
+
+            float driftTurn = (rudderAngle / maxRudderAngle) * rotationSpeed * driftTurnStrength * curveScale;
+            transform.Rotate(Vector3.up, driftTurn * Time.deltaTime);
+        }
+
         if (steeringWheel != null)
         {
             wheelVisualAngle = Mathf.Lerp(wheelVisualAngle, wheelAngle * steeringWheelMultiplier,
@@ -146,14 +153,24 @@ public class BoatMovement : MonoBehaviour
             steeringWheel.transform.localRotation = Quaternion.Euler(0, wheelVisualAngle, 0);
         }
 
-        Debug.Log($"Telegraph: {currentTelegraph}, Speed: {currentSpeed:F2}, Rudder: {rudderAngle:F2}, EffectiveRot: {effectiveRotation:F2}");
+        //Debug.Log($"Telegraph: {currentTelegraph}, Speed: {currentSpeed:F2}, Rudder: {rudderAngle:F2}");
     }
 
     void MoveBoat()
     {
         float targetSpeed = currentTelegraph * telegraphStepSpeed;
 
-        // Scale acceleration based on telegraph level (higher telegraph = faster accel)
+        // Apply drag effect to target speed while turning
+        if (Mathf.Abs(rudderAngle) > 1f)
+        {
+            float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / (telegraphStepSpeed * maxAhead));
+            float rudderDeflection = Mathf.Abs(rudderAngle) / maxRudderAngle;
+            float telegraphFactor = Mathf.Clamp01((float)Mathf.Abs(currentTelegraph) / maxAhead);
+
+            float dragStrength = rudderDeflection * normalizedSpeed * telegraphFactor * telegraphStepSpeed;
+            targetSpeed -= dragStrength;
+        }
+
         float dynamicAccel = accelerationSpeed * Mathf.Max(1, Mathf.Abs(currentTelegraph));
 
         currentSpeed = Mathf.SmoothDamp(
@@ -165,5 +182,4 @@ public class BoatMovement : MonoBehaviour
 
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
     }
-
 }
