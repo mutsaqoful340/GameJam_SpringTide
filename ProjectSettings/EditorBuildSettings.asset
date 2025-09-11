@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/STARTSAIL.unity
     guid: a58fbcd73379d194f9251d52b3a5a896
+  - enabled: 1
+    path: Assets/Scene/LogoAchronas.unity
+    guid: e9d981070318807468c1de8dc2c8107b
+  - enabled: 1
+    path: Assets/Scene/MAINMENU.unity
+    guid: d17981a971e915b4ab954ce09244d628
   m_configObjects: {}
