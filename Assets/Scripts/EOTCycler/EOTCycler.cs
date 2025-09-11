@@ -83,11 +83,25 @@ public class EOTCycler : MonoBehaviour
 
     private void CycleEOTUP()
     {
-        boatMovement.currentTelegraph++;
+        if (boatMovement.currentTelegraph < boatMovement.maxAhead)
+        {
+            boatMovement.currentTelegraph++;
+        }
+        else
+        {
+            return;
+        }
     }
 
     private void CycleEOTDOWN()
     {
-        boatMovement.currentTelegraph--;
+        if (boatMovement.currentTelegraph > boatMovement.maxAstern)
+        {
+            boatMovement.currentTelegraph--;
+        }
+        else
+        {
+            return;
+        }
     }
 }
