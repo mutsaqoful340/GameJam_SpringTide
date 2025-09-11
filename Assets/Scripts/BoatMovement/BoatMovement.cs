@@ -22,6 +22,11 @@ public class BoatMovement : MonoBehaviour
     public float steeringWheelMultiplier = 1f;   // visual spin scale
     public float steeringWheelTurnSpeed = 5f;    // how quickly the wheel visual catches up
 
+    [Header("Collision Settings")]
+    private float afterCollisionSpeedFactor; // Speed is reduced to 50% after collision
+
+    public bool isBoatColliding = false;
+
     private float currentSpeed = 0f;
     private float rudderAngle = 0f;        // actual rudder
     private float speedVelocity;
@@ -36,6 +41,10 @@ public class BoatMovement : MonoBehaviour
     {
         playerInput = GetComponent<HandlePlayerInput>();
     }
+    void Start()
+    {
+        afterCollisionSpeedFactor = 1f;
+    }
 
     void Update()
     {
@@ -45,6 +54,24 @@ public class BoatMovement : MonoBehaviour
         ApplySteering();
         MoveBoat();
     }
+
+    public void BoatStartColliding()
+    {
+        isBoatColliding = true;
+        afterCollisionSpeedFactor = 0.5f;
+    }
+
+    public void BoatColliding()
+    {
+        afterCollisionSpeedFactor = -0.2f;
+    }
+
+    public void BoatStopColliding()
+    {
+        isBoatColliding = false;
+        afterCollisionSpeedFactor = 1f;
+    }
+
 
     void HandleTelegraphInput()
     {
@@ -99,7 +126,7 @@ public class BoatMovement : MonoBehaviour
         {
             isDragging = false;
         }
-}
+    }
 
 
     void HandleKeyboardSteering()
@@ -139,9 +166,17 @@ public class BoatMovement : MonoBehaviour
     {
         float targetSpeed = currentTelegraph * telegraphStepSpeed;
 
-        // SmoothDamp: gradual acceleration/deceleration
-        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedVelocity, 1f / accelerationSpeed);
+        // Scale acceleration based on telegraph level (higher telegraph = faster accel)
+        float dynamicAccel = accelerationSpeed * Mathf.Max(1, Mathf.Abs(currentTelegraph));
+
+        currentSpeed = Mathf.SmoothDamp(
+            currentSpeed,
+            targetSpeed,
+            ref speedVelocity,
+            1f / dynamicAccel
+        );
 
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
     }
+
 }
