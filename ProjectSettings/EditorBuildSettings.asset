@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/!TrialChamber.unity
     guid: d67b39db97b093042947ea158345a080
+  - enabled: 1
+    path: Assets/Scene/PengenalanCerita.unity
+    guid: daed2a39e3a4c224bac31bdd3c0fc44b
   m_configObjects: {}

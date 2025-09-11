@@ -59,7 +59,7 @@ public class BGMManager : MonoBehaviour
             case "!TrialChamber":
                 PlayBGM(level2BGM);
                 break;
-            case "Credit":
+            case "Setting":
                 PlayBGM(creditBGM);
                 break;
             default:
