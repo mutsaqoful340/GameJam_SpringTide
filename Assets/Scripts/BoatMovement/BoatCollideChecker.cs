@@ -7,7 +7,7 @@ public class BoatCollideChecker : MonoBehaviour
 {
     //public PlayerLife playerLife; // Reference to the PlayerLife script
 
-    public bool isColliding = false;
+    private bool isColliding = false;
 
     private void OnTriggerEnter(Collider other)
     {
