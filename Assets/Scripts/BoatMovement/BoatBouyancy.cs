@@ -6,6 +6,7 @@ public class BoatBuoyancy : MonoBehaviour
 {
     public Transform[] floatPoints;
     public float buoyancyStrength = 10f;
+    public float maxDepthEffect = 2f;         // clamp per float point (prevents huge forces)
     public float waterDrag = 1f;
     public float waterAngularDrag = 0.5f;
 
@@ -17,6 +18,7 @@ public class BoatBuoyancy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
     void FixedUpdate()
@@ -38,7 +40,6 @@ public class BoatBuoyancy : MonoBehaviour
 
             WaterSearchResult result;
 
-            // Query water surface
             if (waterSurface.FindWaterSurfaceHeight(search, out result))
             {
                 float waterHeight = result.height;
@@ -46,11 +47,17 @@ public class BoatBuoyancy : MonoBehaviour
 
                 if (depth > 0f)
                 {
-                    // Buoyancy force
-                    Vector3 uplift = Vector3.up * buoyancyStrength * depth;
+                    // Clamp depth effect so buoyancy won't explode
+                    float clampedDepth = Mathf.Min(depth, maxDepthEffect);
+
+                    // Apply buoyancy, damped if already moving upward fast
+                    float verticalVel = rb.GetPointVelocity(samplePos).y;
+                    float damping = Mathf.Clamp01(1f - verticalVel * 0.25f);
+
+                    Vector3 uplift = Vector3.up * buoyancyStrength * clampedDepth * damping;
                     rb.AddForceAtPosition(uplift, samplePos, ForceMode.Force);
 
-                    // Drag for stability
+                    // Add drag for stability
                     Vector3 velocity = rb.GetPointVelocity(samplePos);
                     rb.AddForceAtPosition(-velocity * waterDrag, samplePos, ForceMode.Force);
                 }
