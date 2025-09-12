@@ -26,7 +26,6 @@ public class CameraControl : MonoBehaviour
     {
         currentXRotation = pivot.localEulerAngles.x;
         if (currentXRotation > 180f) currentXRotation -= 360f;
-        Cursor.lockState = CursorLockMode.Confined;
 
         // ✅ Load sensitivitas dari PlayerPrefs
         float savedSensitivity = PlayerPrefs.GetFloat("CameraSensitivity", maxRotateSpeed);

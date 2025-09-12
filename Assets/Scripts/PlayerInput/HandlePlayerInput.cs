@@ -10,6 +10,11 @@ public class HandlePlayerInput : MonoBehaviour
 
     public GameInputActions gameInputActions;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
     private void OnEnable()
     {
         if (gameInputActions == null)

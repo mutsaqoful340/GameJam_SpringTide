@@ -8,6 +8,7 @@ TagManager:
   - SteeringWheel
   - MarineHorn
   - Obstacle
+  - WaterSurface
   layers:
   - Default
   - TransparentFX

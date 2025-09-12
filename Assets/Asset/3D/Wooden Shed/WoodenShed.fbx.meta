@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: f538ab71c4f84214f81b246e8a5db0f1
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exterior1
+    second: {fileID: 2100000, guid: ff844d5fb28d97344bbab5aad6cce33c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exterior2
+    second: {fileID: 2100000, guid: 984542a0bfbdf4c44894bc9d157fcf3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exterior3
+    second: {fileID: 2100000, guid: 666616a1bb8da50449757839140e8bcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Exterior4
+    second: {fileID: 2100000, guid: 5ff3f651270417e408347f42b82f74f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 9e16b0ba583ec2a4db42f5c2ec560ea5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior
+    second: {fileID: 2100000, guid: 9d6f5b78eecd75c47828eded705de16d, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior1_BaseColor
+    second: {fileID: 2800000, guid: 9814fd3cc3b8c5b42b7976ff831b66de, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior1_Metallic
+    second: {fileID: 2800000, guid: 4e1ca0ecba997b94bba44fc7a57fb8c1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior1_NormalGL
+    second: {fileID: 2800000, guid: 637e889cda0b6834fa5a28f90bd7bb1b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior1_Roughness
+    second: {fileID: 2800000, guid: 582feea0373152244a0faa592b460df9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior2_BaseColor
+    second: {fileID: 2800000, guid: 3d7af918aaf36414fb838605f54b1949, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior2_Metallic
+    second: {fileID: 2800000, guid: 324bd65ac92a0a3478c7f905741ac1f2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior2_NormalGL
+    second: {fileID: 2800000, guid: 52630eb0c7fec094aa5efb2d039d014b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior2_Roughness
+    second: {fileID: 2800000, guid: 56c30c3afad74c64f918526aa255e559, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior3_BaseColor
+    second: {fileID: 2800000, guid: 30f7827117e0bce4b9a99b1a27e15251, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior3_Metallic
+    second: {fileID: 2800000, guid: a9153bb05c30bcf40993ef3f96c8aaae, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior3_NormalGL
+    second: {fileID: 2800000, guid: 5a22f66523ab94e45b1677b7b75532d8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior3_Roughness
+    second: {fileID: 2800000, guid: de5da68b37ef68c45b3f43f307c5cfe1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior4_BaseColor
+    second: {fileID: 2800000, guid: 06b03b85075858b4891311cf82a6f272, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior4_Metallic
+    second: {fileID: 2800000, guid: 92431f230fda6784586d19e70b39056a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior4_NormalGL
+    second: {fileID: 2800000, guid: 00f1419f514812c4f9eb38646dd8b0c1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Exterior4_Roughness
+    second: {fileID: 2800000, guid: 712cc1da12110a04091faded01f1b5e6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Glass_BaseColor
+    second: {fileID: 2800000, guid: 3114292522dcc8e48b106084cf84b5d1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Glass_Metallic
+    second: {fileID: 2800000, guid: 305766b4286b2114290ee4e58e4e48f7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Glass_NormalGL
+    second: {fileID: 2800000, guid: 98f4746c58f781a4eadd741f013960ee, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Glass_Roughness
+    second: {fileID: 2800000, guid: d71a76112d65d764582555fae9d9aded, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Glass_Transparency
+    second: {fileID: 2800000, guid: 141cd1f7834040f409c7f6ae0d3fb1bb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Interior_BaseColor
+    second: {fileID: 2800000, guid: c9dfd2f63e05caf4886cd5553c452a31, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Interior_Metallic
+    second: {fileID: 2800000, guid: 6a57598d0f444d24c8aa87bf7dd471df, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Interior_NormalGL
+    second: {fileID: 2800000, guid: 2799a63f8c5f0494c8f9e931dec56eea, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: shed0914_Interior_Roughness
+    second: {fileID: 2800000, guid: a1f5e0f0ec74406468e09a294016dacb, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
