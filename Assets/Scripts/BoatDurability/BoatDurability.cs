@@ -97,7 +97,7 @@ public class BoatDurability : MonoBehaviour
         Debug.Log("Boat hit an obstacle! Current Durability: " + currentDurability);
     }
     
-    void BoatCapsize()
+    public void BoatCapsize()
     {
         if (boatMovement != null)
         {
