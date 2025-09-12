@@ -2657,7 +2657,7 @@ MonoBehaviour:
   m_Pan: 0
   m_Dutch: 0
   m_ZoomScale: 1
-  m_FollowAttachment: 0.954
+  m_FollowAttachment: 0.875
   m_LookAtAttachment: 1
 --- !u!1 &1215865462
 GameObject:
@@ -3182,6 +3182,7 @@ GameObject:
   - component: {fileID: 1720569039}
   - component: {fileID: 1720569042}
   - component: {fileID: 1720569045}
+  - component: {fileID: 1720569046}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3259,10 +3260,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardTurnDrag: 2
+  reverseTurnDrag: 2
   steeringWheel: {fileID: 3655000508777540590}
   steeringWheelMultiplier: 5
   steeringWheelTurnSpeed: 5
   isBoatColliding: 0
+  rudderNeedle: {fileID: 4381003024168321840}
+  maxNeedleY: -0.000863
+  minNeedleY: -0.003731
+  needleSmoothSpeed: 5
+  speedNeedle: {fileID: 5591923441959932895}
+  maxAsternRotation: 140
+  maxAheadRotation: 140
+  speedNeedleSmoothSpeed: 5
+  maxAheadDisplaySpeed: 1.5
+  maxAsternDisplaySpeed: 1.5
 --- !u!114 &1720569038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3295,16 +3308,10 @@ MonoBehaviour:
   audioSource: {fileID: 1215865464}
   EOT_IN: {fileID: 8300000, guid: 4033e94d4c50eae40a0d7ea5b9a1e1e6, type: 3}
   EOT_OUT: {fileID: 8300000, guid: 0138556edf3532b4eba720072d3c7db6, type: 3}
-  needle: {fileID: 4381003024168321840}
-  stepAngles:
-  - -80
-  - -40
-  - -5
-  - 32
-  - 68
-  - 108.5
-  - 144.5
-  needleLerpSpeed: 10
+  telegraphNeedle: {fileID: 8430237927539944042}
+  telegraphAngles: []
+  needleLerpSpeed: 5
+  currentTelegraphStep: 0
   boatMovement: {fileID: 1720569037}
 --- !u!114 &1720569042
 MonoBehaviour:
@@ -3392,6 +3399,20 @@ MonoBehaviour:
   lightAnimator: {fileID: 989891335}
   sinkingDuration: 5
   isBoatDestroyed: 0
+--- !u!114 &1720569046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720569035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4d9c729b4a50e42947c6c75ddb938e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needle: {fileID: 1915015402979396947}
+  rotationSpeed: 5
 --- !u!1 &1733358309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5899,13 +5920,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3153405960193099782}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08831792, y: -0.088317834, z: -0.7015696, w: -0.70156974}
+  m_LocalRotation: {x: -0.08831782, y: 0.08831782, z: 0.7015697, w: 0.7015697}
   m_LocalPosition: {x: 0.0013145495, y: -0.017145185, z: 0.017123533}
   m_LocalScale: {x: 0.006200429, y: 0.006200429, z: 0.004465392}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6151138820885072186}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.35, y: 0, z: 90}
 --- !u!1 &5654023072346967298
 GameObject:
   m_ObjectHideFlags: 0
