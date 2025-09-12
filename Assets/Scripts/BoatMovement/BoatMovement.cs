@@ -12,12 +12,16 @@ public class BoatMovement : MonoBehaviour
     public float accelerationSpeed = 2f;
     public float rotationSpeed = 20f;
 
-    [Header("Steing Settings")]
+    [Header("Steering Settings")]
     public float rudderStep = 5f;
     public float maxRudderAngle = 45f;
     public int spinsForMaxRudder = 6;
     public float driftTurnStrength = 0.05f;
     public AnimationCurve driftResponseCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+
+    [Header("Drag Settings")]
+    public float forwardTurnDrag = 1f; // drag strength while moving ahead
+    public float reverseTurnDrag = 1f; // drag strength while moving astern
 
     [Header("Steering Wheel")]
     public GameObject steeringWheel;
@@ -27,6 +31,23 @@ public class BoatMovement : MonoBehaviour
     [Header("Collision Settings")]
     public bool isBoatColliding = false;
 
+    [Header("Rudder Needle Settings")]
+    public Transform rudderNeedle;
+    public float maxNeedleY = 0.5f;
+    public float minNeedleY = -0.5f;
+    public float needleSmoothSpeed = 5f;
+
+    [Header("Speedometer Needle Settings")]
+    public Transform speedNeedle;
+    public float maxAsternRotation = 90f;
+    public float maxAheadRotation = 90f;
+    public float speedNeedleSmoothSpeed = 5f;
+    public float maxAheadDisplaySpeed = 20f;
+    public float maxAsternDisplaySpeed = 10f;
+
+    private Quaternion baseNeedleRotation;
+    private float currentSpeedRotation;
+    private float currentNeedleY;
     private float currentSpeed = 0f;
     private float rudderAngle = 0f;
     private float speedVelocity;
@@ -44,6 +65,11 @@ public class BoatMovement : MonoBehaviour
         playerInput = GetComponent<HandlePlayerInput>();
         boatDurability = GetComponent<BoatDurability>();
         boatBuoyancy = GetComponent<BoatBuoyancy>();
+    }
+
+    void Start()
+    {
+        baseNeedleRotation = Quaternion.Euler(-14.35f, 0f, 0f);
     }
 
     void Update()
@@ -145,6 +171,17 @@ public class BoatMovement : MonoBehaviour
             transform.Rotate(Vector3.up, driftTurn * Time.deltaTime);
         }
 
+        if (rudderNeedle != null)
+        {
+            float normalizedDeflection = rudderAngle / maxRudderAngle;
+            float targetNeedleY = Mathf.Lerp(minNeedleY, maxNeedleY, (normalizedDeflection + 1f) / 2f);
+            currentNeedleY = Mathf.Lerp(currentNeedleY, targetNeedleY, Time.deltaTime * needleSmoothSpeed);
+
+            Vector3 localPos = rudderNeedle.localPosition;
+            localPos.x = currentNeedleY;
+            rudderNeedle.localPosition = localPos;
+        }
+
         if (steeringWheel != null)
         {
             wheelVisualAngle = Mathf.Lerp(wheelVisualAngle, wheelAngle * steeringWheelMultiplier,
@@ -153,14 +190,37 @@ public class BoatMovement : MonoBehaviour
             steeringWheel.transform.localRotation = Quaternion.Euler(0, wheelVisualAngle, 0);
         }
 
-        //Debug.Log($"Telegraph: {currentTelegraph}, Speed: {currentSpeed:F2}, Rudder: {rudderAngle:F2}");
+        if (speedNeedle != null)
+        {
+            float targetRotation = 90f;
+
+            if (currentSpeed > 0.01f)
+            {
+                float normalized = Mathf.Clamp01(currentSpeed / maxAheadDisplaySpeed);
+                targetRotation = Mathf.Lerp(90f, 90f + maxAheadRotation, normalized);
+            }
+            else if (currentSpeed < -0.01f)
+            {
+                float normalized = Mathf.Clamp01(-currentSpeed / maxAsternDisplaySpeed);
+                targetRotation = Mathf.Lerp(90f, 90f - maxAsternRotation, normalized);
+            }
+
+            currentSpeedRotation = Mathf.Lerp(
+                currentSpeedRotation,
+                targetRotation,
+                Time.deltaTime * speedNeedleSmoothSpeed
+            );
+
+            speedNeedle.localRotation = baseNeedleRotation * Quaternion.Euler(0f, 0f, currentSpeedRotation);
+        }
+
+        Debug.Log($"Telegraph: {currentTelegraph}, Speed: {currentSpeed:F2}, Rudder: {rudderAngle:F2}");
     }
 
     void MoveBoat()
     {
         float targetSpeed = currentTelegraph * telegraphStepSpeed;
 
-        // Apply drag effect to target speed while turning
         if (Mathf.Abs(rudderAngle) > 1f)
         {
             float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / (telegraphStepSpeed * maxAhead));
@@ -168,7 +228,11 @@ public class BoatMovement : MonoBehaviour
             float telegraphFactor = Mathf.Clamp01((float)Mathf.Abs(currentTelegraph) / maxAhead);
 
             float dragStrength = rudderDeflection * normalizedSpeed * telegraphFactor * telegraphStepSpeed;
-            targetSpeed -= dragStrength;
+
+            if (currentTelegraph > 0)
+                targetSpeed -= dragStrength * forwardTurnDrag;
+            else if (currentTelegraph < 0)
+                targetSpeed += dragStrength * reverseTurnDrag;
         }
 
         float dynamicAccel = accelerationSpeed * Mathf.Max(1, Mathf.Abs(currentTelegraph));
