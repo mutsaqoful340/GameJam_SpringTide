@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class EOTCycler : MonoBehaviour
@@ -14,10 +15,11 @@ public class EOTCycler : MonoBehaviour
     public AudioClip EOT_IN;
     public AudioClip EOT_OUT;
 
-    [Header("Needle Indicator")]
-    public Transform needle;          // assign your needle Transform here
-    public float[] stepAngles;        // size = 7, each index corresponds to a telegraph step
-    public float needleLerpSpeed = 5f;
+    [Header("Telegraph Needle Settings")]
+    public GameObject telegraphNeedle; // Assign in Inspector
+    public float[] telegraphAngles;    // Assign in Inspector, should have 7 angles for 7 steps
+    public float needleLerpSpeed = 5f; // Speed of needle movement
+    public float currentTelegraphStep;
 
     private bool isDragging = false;
     private float dragStartY;
@@ -27,15 +29,15 @@ public class EOTCycler : MonoBehaviour
     private bool hasPlayedOut = false;
 
     [SerializeField] private BoatMovement boatMovement;
+    private EOTNeedle eotNeedle;
 
-    void Update()
+    void Start()
     {
-        HandleLeverDrag();
-        HandleLeverReturn();
-        UpdateNeedle();
+        currentTelegraphStep = boatMovement.currentTelegraph;
+        eotNeedle = GetComponent<EOTNeedle>();
     }
 
-    private void HandleLeverDrag()
+    void Update()
     {
         // Start drag
         if (Input.GetMouseButtonDown(0))
@@ -92,10 +94,7 @@ public class EOTCycler : MonoBehaviour
                 isDragging = false;
             }
         }
-    }
 
-    private void HandleLeverReturn()
-    {
         // Smooth auto-return when not dragging
         if (!isDragging && lever.localRotation != Quaternion.Euler(neutralRotation))
         {
@@ -111,36 +110,10 @@ public class EOTCycler : MonoBehaviour
                 Quaternion.Euler(neutralRotation),
                 returnSpeed * Time.deltaTime
             );
+
+            eotNeedle.UpdateNeedle(boatMovement.currentTelegraph);
         }
     }
-
-    private void UpdateNeedle()
-    {
-        if (needle == null || stepAngles.Length == 0) return;
-
-        // BoatMovement currentTelegraph is between maxAstern and maxAhead
-        int telegraphIndex = boatMovement.currentTelegraph - boatMovement.maxAstern;
-        telegraphIndex = Mathf.Clamp(telegraphIndex, 0, stepAngles.Length - 1);
-
-        float targetAngle = stepAngles[telegraphIndex];
-
-        // use signed angle instead of Unity’s wrapped 0–360
-        float currentAngle = needle.localEulerAngles.z;
-        if (currentAngle > 180f) currentAngle -= 360f;
-
-        float newAngle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * needleLerpSpeed);
-        needle.localEulerAngles = new Vector3(
-            needle.localEulerAngles.x,
-            needle.localEulerAngles.y,
-            newAngle
-        );
-
-        // --- Debug info ---
-        Debug.Log($"[Needle] Telegraph={boatMovement.currentTelegraph}, Index={telegraphIndex}, " +
-                $"Current={currentAngle:F2}, Target={targetAngle:F2}, New={newAngle:F2}");
-    }
-
-
 
     void PlaySound(AudioClip clip)
     {
