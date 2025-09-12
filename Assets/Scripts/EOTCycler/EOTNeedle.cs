@@ -10,6 +10,11 @@ public class EOTNeedle : MonoBehaviour
 
     private float targetAngle; // Where the needle wants to go
 
+    void Start()
+    {
+        boatMovement = FindObjectOfType<BoatMovement>();
+    }
+
     void Update()
     {
         currentTelegraphStep = boatMovement.currentTelegraph;
