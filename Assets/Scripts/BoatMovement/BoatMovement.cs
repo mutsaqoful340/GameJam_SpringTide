@@ -48,7 +48,7 @@ public class BoatMovement : MonoBehaviour
     private Quaternion baseNeedleRotation;
     private float currentSpeedRotation;
     private float currentNeedleY;
-    private float currentSpeed = 0f;
+    [HideInInspector] public float currentSpeed = 0f;
     private float rudderAngle = 0f;
     private float speedVelocity;
     private bool isDragging = false;
