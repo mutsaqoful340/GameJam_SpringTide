@@ -1526,12 +1526,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1937444501}
-  - {fileID: 654526147}
   - {fileID: 380596353}
   - {fileID: 1037287836}
   - {fileID: 914742681}
   - {fileID: 148749725}
   - {fileID: 1088254289}
+  - {fileID: 654526147}
   - {fileID: 2087591310}
   - {fileID: 791466855}
   m_Father: {fileID: 551905045}
@@ -2284,7 +2284,7 @@ Transform:
   m_GameObject: {fileID: 654526146}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.77, y: 0, z: -4.208}
+  m_LocalPosition: {x: 165.752, y: 0.172, z: 92.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5998,6 +5998,9 @@ MonoBehaviour:
   sinkingDuration: 5
   cameraControl: {fileID: 1134744235}
   EOTCollider: {fileID: 5962069614599464831}
+  waterBlocker: {fileID: 1461803204}
+  wobbleDuration: 0.2
+  wobbleAngle: 2
   isBoatDestroyed: 0
 --- !u!114 &1720569046
 MonoBehaviour:
