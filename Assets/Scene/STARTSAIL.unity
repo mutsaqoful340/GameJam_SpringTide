@@ -1603,12 +1603,12 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 9ac69cb42d0a2064389bd358408d040b, type: 2}
   exposedParam: BGMVolume
   defaultBGM: {fileID: 0}
-  menuBGM: {fileID: 8300000, guid: 1c7bc13a860970c41975f70dc40b2ac2, type: 3}
+  menuBGM: {fileID: 0}
   level1BGM: {fileID: 0}
   level2BGMs: []
   level2BGM: {fileID: 8300000, guid: aeeeca984470e0341aa2fc8253d29f1b, type: 3}
   level2ExtraBGM: {fileID: 8300000, guid: 498e44f280f5fa04bb4e77675c4d3495, type: 3}
-  creditBGM: {fileID: 8300000, guid: 5792a632ade2d1c4faee7ff081e7e074, type: 3}
+  creditBGM: {fileID: 8300000, guid: 3b067d87a62138e44ba6c062a16eeeff, type: 3}
 --- !u!82 &967503977
 AudioSource:
   m_ObjectHideFlags: 0
