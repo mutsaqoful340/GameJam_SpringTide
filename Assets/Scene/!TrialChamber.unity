@@ -903,7 +903,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -625509938, guid: 7ddda3f9e08bf9f44acba561eff57ef5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26946935577e7714b8f578ce6073540c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -937,7 +937,7 @@ MonoBehaviour:
   shipIcon: {fileID: 619988579}
   ship: {fileID: 1720569036}
   terrain: {fileID: 791466854}
-  offset: {x: -301.5, y: -220}
+  offset: {x: -375, y: -292.9}
   scale: {x: 1, y: 1}
 --- !u!1 &198634268
 GameObject:
