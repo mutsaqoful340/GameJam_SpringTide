@@ -3,19 +3,33 @@ using UnityEngine;
 public class BoatFlipChecker : MonoBehaviour
 {
     [Header("Assigned Sensor Collider")]
-    public Collider flipSensor; // assign the child BoxCollider here
+    public Collider flipSensor; // drag child BoxCollider di sini
     public BoatDurability boatDurability;
 
-    [HideInInspector] public bool isBoatFlipped = false;
+    public bool isBoatFlipped = false;
 
-    private void OnTriggerEnter(Collider e)
+    void Start()
     {
-        // Make sure the trigger is from the flipSensor only
-        if (e.CompareTag("WaterSurface"))
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        // Hanya jalan kalau yang nabrak adalah WaterSurface DAN collider kita adalah sensor
+        if (other.CompareTag("BoatFlipSensor"))
         {
-            // Optional: check if the boat is upside down
             isBoatFlipped = true;
-            boatDurability.BoatCapsize();
         }
+    }
+
+    void Update()
+    {
+        if (isBoatFlipped)
+        {
+            CapsizeBoat();
+        }
+    }
+
+    private void CapsizeBoat()
+    {
+        boatDurability.currentDurability = 0;
     }
 }
