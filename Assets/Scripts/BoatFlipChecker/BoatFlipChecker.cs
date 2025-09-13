@@ -5,6 +5,8 @@ public class BoatFlipChecker : MonoBehaviour
     [Header("Assigned Sensor Collider")]
     public Collider flipSensor; // drag child BoxCollider di sini
     public BoatDurability boatDurability;
+    //public AudioSource seaAmbience;
+    //public AudioSource underwaterAmbience;
 
     public bool isBoatFlipped = false;
 
