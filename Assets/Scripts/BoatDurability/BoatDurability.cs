@@ -22,6 +22,8 @@ public class BoatDurability : MonoBehaviour
     public GameObject waterBlocker;
     public float wobbleDuration = 0.5f; // Duration of the wobble effect
     public float wobbleAngle = 5f; // Angle of the wobble effect
+    public AudioSource seaAmbience;
+    public AudioSource underwaterAmbience;
 
     private bool isBoatColliding = false;
 
@@ -52,6 +54,9 @@ public class BoatDurability : MonoBehaviour
         {
             Debug.LogError("Light Animator is not assigned in the Inspector.");
         }
+
+        seaAmbience.mute = false;
+        underwaterAmbience.mute = true;
     }
 
     void Update()
@@ -143,6 +148,8 @@ public class BoatDurability : MonoBehaviour
             marineHorn.enabled = false; // stop horn sound
             cameraControl.enabled = false; // stop camera follow
             waterBlocker.SetActive(false); // disable water blocker
+            seaAmbience.mute = true;
+            underwaterAmbience.mute = false;
         }
 
         if (boatBuoyancy != null)
