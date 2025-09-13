@@ -19,6 +19,9 @@ public class BoatDurability : MonoBehaviour
     public float sinkingDuration = 3f; // Duration of the sinking effect
     public CameraControl cameraControl;
     public Collider EOTCollider;
+    public GameObject waterBlocker;
+    public float wobbleDuration = 0.5f; // Duration of the wobble effect
+    public float wobbleAngle = 5f; // Angle of the wobble effect
 
     private bool isBoatColliding = false;
 
@@ -56,6 +59,7 @@ public class BoatDurability : MonoBehaviour
         if (isBoatColliding && currentDurability > 0)
         {
             HandleDurability();
+            BoatShake();
         }
         else if (currentDurability <= 2)
         {
@@ -96,13 +100,41 @@ public class BoatDurability : MonoBehaviour
             Debug.Log("Boat stopped colliding with an obstacle.");
         }
     }
+
     void HandleDurability()
     {
         currentDurability--;
         isBoatColliding = false; // Reset to prevent multiple hits in one collision
         Debug.Log("Boat hit an obstacle! Current Durability: " + currentDurability);
+        
     }
-    
+    private void BoatShake()
+    {
+        StartCoroutine(TiltBoat(wobbleDuration, wobbleAngle)); 
+    }
+
+    private IEnumerator TiltBoat(float duration, float angle)
+    {
+        Quaternion originalRot = transform.localRotation;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration; // goes from 0 → 1
+            float falloff = 1f - t;       // amplitude decreases from 1 → 0
+
+            // Oscillate with sine wave, but reduce amplitude over time
+            float z = Mathf.Sin(elapsed * 40f) * angle * falloff;
+
+            transform.localRotation = originalRot * Quaternion.Euler(0, 0, z);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localRotation = originalRot; // Reset rotation at the end
+    }
+
     public void BoatCapsize()
     {
         if (boatMovement != null)
@@ -110,12 +142,14 @@ public class BoatDurability : MonoBehaviour
             boatMovement.enabled = false; // stop controls
             marineHorn.enabled = false; // stop horn sound
             cameraControl.enabled = false; // stop camera follow
+            waterBlocker.SetActive(false); // disable water blocker
         }
 
         if (boatBuoyancy != null)
         {
             StartCoroutine(ReduceBuoyancyOverTime());
         }
+        
 
         Debug.Log("Boat has capsized and is no longer operational.");
     }
