@@ -9,6 +9,7 @@ TagManager:
   - MarineHorn
   - Obstacle
   - WaterSurface
+  - BoatFlipSensor
   layers:
   - Default
   - TransparentFX
