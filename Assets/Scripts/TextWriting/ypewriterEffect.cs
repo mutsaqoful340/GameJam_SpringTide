@@ -16,97 +16,81 @@ public class DialogueManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] audioClips; // dubbing per sesi
 
-    [Header("Typing Settings")]
-    public float delay = 0.05f; // kecepatan ketikan
+    [Header("Timing Settings")]
+    public float[] textDelays;        // delay per sesi sebelum teks muncul
+    public float fadeDuration = 1f;   // durasi fade in/out teks
+    public float holdAfterAudio = 0.5f; // tahan teks setelah audio selesai
 
     [Header("Scene Settings")]
     public string nextSceneName = "NextScene"; // ganti dengan nama scene tujuan
-    public float waitBeforeFade = 2f; // tunggu sebelum fade out
-    public float fadeDuration = 1f;   // durasi fade out
 
     private int index = 0;
-    private Coroutine typingCoroutine;
 
     void Start()
     {
-        ShowSentence(); // mulai sesi pertama
+        textCanvas.alpha = 0f; // pastikan teks awal transparan
+        StartCoroutine(ShowSentence());
     }
 
-    void ShowSentence()
+    IEnumerator ShowSentence()
     {
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        typingCoroutine = StartCoroutine(TypeSentence());
-
-        // play audio dubbing sesuai sesi
-        if (audioSource != null && index < audioClips.Length)
+        while (index < sentencesEng.Length)
         {
-            audioSource.Stop();
-            audioSource.clip = audioClips[index];
-            audioSource.Play();
-        }
-    }
+            textEng.text = sentencesEng[index];
 
-    IEnumerator TypeSentence()
-    {
-        textEng.text = "";
-
-        string sentence = sentencesEng[index];
-
-        // ketikan huruf demi huruf
-        foreach (char c in sentence)
-        {
-            textEng.text += c;
-            yield return new WaitForSeconds(delay);
-        }
-
-        // tunggu audio selesai kalau ada
-        if (audioSource != null && audioSource.clip != null)
-        {
-            yield return new WaitWhile(() => audioSource.isPlaying);
-        }
-
-        // pindah ke sesi berikutnya
-        NextSentence();
-    }
-
-    void NextSentence()
-    {
-        if (index < sentencesEng.Length - 1)
-        {
-            index++;
-            ShowSentence();
-        }
-        else
-        {
-            Debug.Log("Dialog selesai semua sesi.");
-            StartCoroutine(EndDialogueAndTransition());
-        }
-    }
-
-    IEnumerator EndDialogueAndTransition()
-    {
-        // Tunggu beberapa detik
-        yield return new WaitForSeconds(waitBeforeFade);
-
-        // Fade out teks
-        if (textCanvas != null)
-        {
-            float elapsed = 0f;
-            while (elapsed < fadeDuration)
+            // === Mainkan audio dulu ===
+            if (audioSource != null && index < audioClips.Length)
             {
-                elapsed += Time.deltaTime;
-                textCanvas.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
-                yield return null;
+                audioSource.Stop();
+                audioSource.clip = audioClips[index];
+                audioSource.Play();
             }
-            textCanvas.alpha = 0f;
+
+            // === Delay khusus untuk sesi ini ===
+            float delay = (index < textDelays.Length) ? textDelays[index] : 0f;
+            if (delay > 0f)
+                yield return new WaitForSeconds(delay);
+
+            // Fade in teks
+            yield return StartCoroutine(FadeCanvas(0f, 1f, fadeDuration));
+
+            // Tunggu audio selesai
+            if (audioSource != null && audioSource.clip != null)
+            {
+                yield return new WaitWhile(() => audioSource.isPlaying);
+            }
+
+            // Tahan sebentar setelah audio selesai
+            yield return new WaitForSeconds(holdAfterAudio);
+
+            // Fade out teks
+            yield return StartCoroutine(FadeCanvas(1f, 0f, fadeDuration));
+
+            index++;
         }
 
-        // Pindah scene
+        // === Setelah semua sesi selesai ===
+        Debug.Log("Dialog selesai semua sesi.");
+
+        // Delay 2-3 detik dengan layar hitam
+        yield return new WaitForSeconds(2.5f); // bisa atur ke 2 atau 3 sesuai kebutuhan
+
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
         }
+    }
+
+
+    IEnumerator FadeCanvas(float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            textCanvas.alpha = Mathf.Lerp(from, to, elapsed / duration);
+            yield return null;
+        }
+        textCanvas.alpha = to;
     }
 }
