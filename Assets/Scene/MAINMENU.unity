@@ -215,7 +215,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: STARTSAIL
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &84707426
@@ -3198,10 +3198,47 @@ MonoBehaviour:
   rudderStep: 30
   maxRudderAngle: 60
   spinsForMaxRudder: 2
+  driftTurnStrength: 0.05
+  driftResponseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  forwardTurnDrag: 1
+  reverseTurnDrag: 1
   steeringWheel: {fileID: 3655000508777540590}
   steeringWheelMultiplier: 5
   steeringWheelTurnSpeed: 5
   isBoatColliding: 0
+  rudderNeedle: {fileID: 0}
+  maxNeedleY: 0.5
+  minNeedleY: -0.5
+  needleSmoothSpeed: 5
+  speedNeedle: {fileID: 0}
+  maxAsternRotation: 90
+  maxAheadRotation: 90
+  speedNeedleSmoothSpeed: 5
+  maxAheadDisplaySpeed: 20
+  maxAsternDisplaySpeed: 10
 --- !u!114 &1720569038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3231,6 +3268,13 @@ MonoBehaviour:
   upRotation: {x: -30, y: 0, z: 0}
   downRotation: {x: -105, y: 0, z: 0}
   returnSpeed: 60
+  audioSource: {fileID: 0}
+  EOT_IN: {fileID: 0}
+  EOT_OUT: {fileID: 0}
+  telegraphNeedle: {fileID: 0}
+  telegraphAngles: []
+  needleLerpSpeed: 5
+  currentTelegraphStep: 0
   boatMovement: {fileID: 1720569037}
 --- !u!54 &1720569040
 Rigidbody:
