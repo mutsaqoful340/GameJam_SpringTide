@@ -17,6 +17,8 @@ public class BoatDurability : MonoBehaviour
 
     [Header("Boat Sinking Settings")]
     public float sinkingDuration = 3f; // Duration of the sinking effect
+    public CameraControl cameraControl;
+    public Collider EOTCollider;
 
     private bool isBoatColliding = false;
 
@@ -24,6 +26,8 @@ public class BoatDurability : MonoBehaviour
 
     private BoatBuoyancy boatBuoyancy;
     private BoatMovement boatMovement;
+    //private EOTCycler eotCycler;
+    private MarineHorn marineHorn;
 
     void Start()
     {
@@ -33,6 +37,8 @@ public class BoatDurability : MonoBehaviour
 
         boatBuoyancy = GetComponent<BoatBuoyancy>();
         boatMovement = GetComponent<BoatMovement>();
+        //eotCycler = GetComponent<EOTCycler>();
+        marineHorn = GetComponent<MarineHorn>();
 
         if (boatCollider == null)
         {
@@ -102,6 +108,8 @@ public class BoatDurability : MonoBehaviour
         if (boatMovement != null)
         {
             boatMovement.enabled = false; // stop controls
+            marineHorn.enabled = false; // stop horn sound
+            cameraControl.enabled = false; // stop camera follow
         }
 
         if (boatBuoyancy != null)
@@ -130,6 +138,7 @@ public class BoatDurability : MonoBehaviour
             yield return null;
         }
 
+        EOTCollider.enabled = false; 
         boatBuoyancy.buoyancyStrength = 0f; // fully sunk
     }
 
