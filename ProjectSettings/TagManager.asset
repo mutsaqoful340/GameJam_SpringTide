@@ -16,6 +16,7 @@ TagManager:
   - KrakenTentacle
   - Shark
   - KrakenSpotSensor
+  - Briefcase
   layers:
   - Default
   - TransparentFX
