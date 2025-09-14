@@ -21,7 +21,7 @@ public class BoatFinishSensor : MonoBehaviour
 
     void Update()
     {
-        if (isInsideFinish && !hasFinished && boatMovement.currentTelegraph == 0)
+        if (isInsideFinish && !hasFinished)
         {
             stayTimer += Time.deltaTime;
 
