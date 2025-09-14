@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.XR;
 
 public class BoatDurability : MonoBehaviour
 {
@@ -23,7 +24,10 @@ public class BoatDurability : MonoBehaviour
     public float wobbleAngle = 5f; // Angle of the wobble effect
     public AudioSource seaAmbience;
     public AudioSource underwaterAmbience;
+    public AudioSource boatEngine;
     public GameObject BoatDestroyedUI;
+    public GameObject krakenSlapCollider;
+    public FollowWater krakenFollow;
 
     private bool isBoatColliding = false;
 
@@ -63,8 +67,7 @@ public class BoatDurability : MonoBehaviour
     {
         if (isBoatColliding && currentDurability > 0)
         {
-            HandleDurability();
-            BoatShake();
+
         }
         else if (currentDurability <= 2)
         {
@@ -83,15 +86,17 @@ public class BoatDurability : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle") && !isBoatColliding)
+        if (other.CompareTag("Obstacle") || other.CompareTag("Shark") && !isBoatColliding)
         {
             isBoatColliding = true;
+            HandleDurability();
+            BoatShake();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Obstacle") && isBoatColliding)
+        if (other.CompareTag("Obstacle") || other.CompareTag("Shark") && isBoatColliding)
         {
 
         }
@@ -99,7 +104,7 @@ public class BoatDurability : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Obstacle") && isBoatColliding)
+        if (other.CompareTag("Obstacle") || other.CompareTag("Shark") && isBoatColliding)
         {
             isBoatColliding = false;
             //playerLife.isBoatColliding = false; // Reset the flag in PlayerLife
@@ -114,10 +119,15 @@ public class BoatDurability : MonoBehaviour
 
     void HandleDurability()
     {
-        currentDurability--;
-        isBoatColliding = false; // Reset to prevent multiple hits in one collision
-        Debug.Log("Boat hit an obstacle! Current Durability: " + currentDurability);
-        
+        if (isBoatColliding)
+        {
+            currentDurability--;
+            Debug.Log("Boat hit an obstacle! Current Durability: " + currentDurability);
+        }
+        else
+        {
+            return;
+        }
     }
     private void BoatShake()
     {
@@ -150,12 +160,16 @@ public class BoatDurability : MonoBehaviour
     {
         if (boatMovement != null)
         {
+            boatEngine.Stop(); // stop movement
             boatMovement.enabled = false; // stop controls
             marineHorn.enabled = false; // stop horn sound
             cameraControl.enabled = false; // stop camera follow
             waterBlocker.SetActive(false); // disable water blocker
             seaAmbience.mute = true;
             underwaterAmbience.mute = false;
+            krakenFollow.enabled = false;
+            //krakenSlapCollider.SetActive(false);
+
         }
 
         if (boatBuoyancy != null)
