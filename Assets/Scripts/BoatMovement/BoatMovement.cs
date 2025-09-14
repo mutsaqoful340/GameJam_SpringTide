@@ -45,6 +45,12 @@ public class BoatMovement : MonoBehaviour
     public float maxAheadDisplaySpeed = 20f;
     public float maxAsternDisplaySpeed = 10f;
 
+    [Header("Engine Sound Settings")]
+    public AudioSource engineSound;
+    public float minEnginePitch = 0.8f; // Lower pitch at zero speed
+    public float maxEnginePitch = 2.0f; // Higher pitch at max speed
+
+
     private Quaternion baseNeedleRotation;
     private float currentSpeedRotation;
     private float currentNeedleY;
@@ -70,6 +76,13 @@ public class BoatMovement : MonoBehaviour
     void Start()
     {
         baseNeedleRotation = Quaternion.Euler(-14.35f, 0f, 0f);
+
+        if (engineSound != null)
+        {
+            engineSound.loop = true;
+            engineSound.playOnAwake = false; // safer in case you want to control manually
+            engineSound.Play();
+        }
     }
 
     void Update()
@@ -79,6 +92,7 @@ public class BoatMovement : MonoBehaviour
         HandleKeyboardSteering();
         ApplySteering();
         MoveBoat();
+        UpdateEngineSound();
     }
 
     void HandleTelegraphInput()
@@ -88,6 +102,21 @@ public class BoatMovement : MonoBehaviour
 
         if (playerInput.DeceleratePressed && currentTelegraph > maxAstern)
             currentTelegraph--;
+    }
+
+    void UpdateEngineSound()
+    {
+        if (engineSound == null) return;
+
+        // Normalize speed relative to max display speeds
+        float normalizedSpeed = 0f;
+        if (currentSpeed > 0)
+            normalizedSpeed = Mathf.Clamp01(currentSpeed / maxAheadDisplaySpeed);
+        else if (currentSpeed < 0)
+            normalizedSpeed = Mathf.Clamp01(-currentSpeed / maxAsternDisplaySpeed);
+
+        // Map normalized speed to pitch
+        engineSound.pitch = Mathf.Lerp(minEnginePitch, maxEnginePitch, normalizedSpeed);
     }
 
     void HandleMouseSteering()
