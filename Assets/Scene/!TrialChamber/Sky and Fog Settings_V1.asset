@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953beb541740ddc499d005ee80c9ff29, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   quality:
     m_OverrideState: 1
     m_Value: 1
@@ -21,16 +21,16 @@ MonoBehaviour:
     m_Value: 1
   colorMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
   tint:
     m_OverrideState: 1
     m_Value: {r: 0.0040939813, g: 0.0040939813, b: 0.03773582, a: 1}
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 150
+    m_Value: 612.4
   mipFogMaxMip:
     m_OverrideState: 0
     m_Value: 0.5
@@ -42,13 +42,13 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 29.5
+    m_Value: 48
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 160
+    m_Value: 220.2
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 14.22
+    m_Value: 28
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Value: 0.226
   depthExtent:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 300
   denoisingMode:
     m_OverrideState: 1
     m_Value: 2
