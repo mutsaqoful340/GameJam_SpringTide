@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+using TMPro;
 
 public class BoatDurability : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class BoatDurability : MonoBehaviour
     public float wobbleAngle = 5f; // Angle of the wobble effect
     public AudioSource seaAmbience;
     public AudioSource underwaterAmbience;
+    public GameObject BoatDestroyedUI;
 
     private bool isBoatColliding = false;
 
@@ -75,6 +75,7 @@ public class BoatDurability : MonoBehaviour
                 Debug.Log("Boat is destroyed!");
                 isBoatDestroyed = true;
                 BoatCapsize();
+                GameOver();
             }
         }
 
@@ -104,6 +105,11 @@ public class BoatDurability : MonoBehaviour
             //playerLife.isBoatColliding = false; // Reset the flag in PlayerLife
             Debug.Log("Boat stopped colliding with an obstacle.");
         }
+    }
+
+    public void GameOver()
+    {
+        BoatDestroyedUI.SetActive(true);
     }
 
     void HandleDurability()
