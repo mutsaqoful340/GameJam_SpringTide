@@ -5,6 +5,7 @@ public class BoatFlipChecker : MonoBehaviour
     [Header("Assigned Sensor Collider")]
     public Collider flipSensor; // drag child BoxCollider di sini
     public BoatDurability boatDurability;
+    public GameObject boatDestroyedUI;
     //public AudioSource seaAmbience;
     //public AudioSource underwaterAmbience;
 
@@ -33,5 +34,7 @@ public class BoatFlipChecker : MonoBehaviour
     private void CapsizeBoat()
     {
         boatDurability.currentDurability = 0;
+        //boatDestroyedUI.SetActive(true);
+        // Time.timeScale = 0f; // Pause the game
     }
 }
