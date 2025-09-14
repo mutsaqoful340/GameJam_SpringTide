@@ -8,6 +8,7 @@ public class BoatUnchartedMap : MonoBehaviour
     [Header("Uncharted Map Settings")]
     public float unchartedMapDuration = 5f; // Duration before ExecutePlayer
     public GameObject unchartedMapUI;
+    public GameObject krakenSpotUI;
     public GameObject kraken; // Assign the Kraken GameObject in the Inspector
     public Animator krakenAnimator;
     public VolumeProfile volumeProfile;
@@ -30,6 +31,7 @@ public class BoatUnchartedMap : MonoBehaviour
         boatMovement = GetComponent<BoatMovement>();
         boatDurability = GetComponent<BoatDurability>();
         unchartedMapUI.SetActive(false);
+        krakenSpotUI.SetActive(false);
         kraken.SetActive(false);
         
 
@@ -52,10 +54,18 @@ public class BoatUnchartedMap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("UnchartedMap") && !isInUnchartedMap)
+        if (other.CompareTag("UnchartedMap") || (other.CompareTag("KrakenSpotSensor") && !isInUnchartedMap))
         {
-            isInUnchartedMap = true;
-            unchartedMapUI.SetActive(true);
+            if (other.CompareTag("UnchartedMap"))
+            {
+                isInUnchartedMap = true;
+                unchartedMapUI.SetActive(true);
+            }
+            else if (other.CompareTag("KrakenSpotSensor"))
+            {
+                krakenSpotUI.SetActive(true);
+            }
+
 
             // Start countdown
             countdownCoroutine = StartCoroutine(UnchartedCountdown());
@@ -70,10 +80,18 @@ public class BoatUnchartedMap : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("UnchartedMap") && isInUnchartedMap)
+        if (other.CompareTag("UnchartedMap") || (other.CompareTag("KrakenSpotSensor") && isInUnchartedMap))
         {
-            isInUnchartedMap = false;
-            unchartedMapUI.SetActive(false);
+            if (other.CompareTag("KrakenSpotSensor"))
+            {
+                isInUnchartedMap = false;
+                unchartedMapUI.SetActive(false);
+            }
+            else if (other.CompareTag("UnchartedMap"))
+            {
+                krakenSpotUI.SetActive(false);
+            }
+
 
             // Stop countdown if boat leaves before time is up
             if (countdownCoroutine != null)
