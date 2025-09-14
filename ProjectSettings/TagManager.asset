@@ -13,6 +13,7 @@ TagManager:
   - FinishLine
   - FinishDock
   - UnchartedMap
+  - KrakenTentacle
   layers:
   - Default
   - TransparentFX
