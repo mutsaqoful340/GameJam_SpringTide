@@ -12,6 +12,7 @@ TagManager:
   - BoatFlipSensor
   - FinishLine
   - FinishDock
+  - UnchartedMap
   layers:
   - Default
   - TransparentFX
