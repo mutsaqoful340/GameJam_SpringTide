@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scene/STARTSAIL.unity
     guid: a58fbcd73379d194f9251d52b3a5a896
   - enabled: 1
-    path: Assets/Scene/MAINMENU.unity
+    path: Assets/Scene/!MAINMENU.unity
     guid: d17981a971e915b4ab954ce09244d628
   - enabled: 1
     path: Assets/Scene/Setting.unity
