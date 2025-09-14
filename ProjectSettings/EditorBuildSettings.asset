@@ -6,27 +6,27 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/!MAINMENU.unity
-    guid: d17981a971e915b4ab954ce09244d628
+    path: Assets/Scene/MAINMENU.unity
+    guid: cd3362ce5eabbc2478e54dd02e27cd28
   - enabled: 1
     path: Assets/Scene/PengenalanCerita.unity
     guid: daed2a39e3a4c224bac31bdd3c0fc44b
   - enabled: 1
     path: Assets/Scene/!TrialChamber.unity
     guid: d67b39db97b093042947ea158345a080
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/Setting.unity
     guid: 5d7b627b90b3d9e489bcd7dcb820a050
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/Rule1.unity
     guid: 6efcc7f297dfd0e4d890738c0b5ce12c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/Rule2.unity
     guid: 1acd1c6cfcb9c3347abc6476efdc58db
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/Rule3.unity
     guid: 48d47c7a7508c934e9eb460b8819014d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/Credits.unity
     guid: 28a9a116204bc73448c455424211ed13
   - enabled: 0
@@ -35,7 +35,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scene/STARTSAIL.unity
     guid: a58fbcd73379d194f9251d52b3a5a896
-  - enabled: 1
-    path: Assets/Scene/MAINMENU.unity
-    guid: cd3362ce5eabbc2478e54dd02e27cd28
-  m_configObjects: {}
+  - enabled: 0
+    path: Assets/Scene/!MAINMENU.unity
+    guid: d17981a971e915b4ab954ce09244d628
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bda2f504a8ffdeb4b951a86a0b57341c,
+      type: 2}
