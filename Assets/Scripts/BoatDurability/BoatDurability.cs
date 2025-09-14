@@ -5,8 +5,9 @@ using UnityEngine.XR;
 
 public class BoatDurability : MonoBehaviour
 {
-    [Header("Boat Collider")]
+    [Header("Collider Settings")]
     public Collider boatCollider;
+    public AudioSource boatCrashSound;
 
     [Header("Durability Settings")]
     public int maxDurability = 5;
@@ -28,6 +29,7 @@ public class BoatDurability : MonoBehaviour
     public GameObject BoatDestroyedUI;
     public GameObject krakenSlapCollider;
     public FollowWater krakenFollow;
+    public GameObject BriefcaseOpenedUI;
 
     private bool isBoatColliding = false;
 
@@ -37,6 +39,7 @@ public class BoatDurability : MonoBehaviour
     private BoatMovement boatMovement;
     //private EOTCycler eotCycler;
     private MarineHorn marineHorn;
+    private BoatBriefCase boatBriefCase;
 
     void Start()
     {
@@ -48,6 +51,7 @@ public class BoatDurability : MonoBehaviour
         boatMovement = GetComponent<BoatMovement>();
         //eotCycler = GetComponent<EOTCycler>();
         marineHorn = GetComponent<MarineHorn>();
+        boatBriefCase = GetComponent<BoatBriefCase>();
 
         if (boatCollider == null)
         {
@@ -73,13 +77,25 @@ public class BoatDurability : MonoBehaviour
         {
             lightAnimator.SetInteger("currentBoatDurability", 2);
 
-            if (currentDurability <= 0)
+            if (currentDurability <= 0 && boatBriefCase.isBriefcaseOpened == false)
             {
                 Debug.Log("Boat is destroyed!");
                 isBoatDestroyed = true;
                 BoatCapsize();
                 GameOver();
             }
+            else if (currentDurability <= 0 && boatBriefCase.isBriefcaseOpened == true)
+            {
+                Debug.Log("Boat is destroyed!");
+                isBoatDestroyed = true;
+                BoatCapsize();
+                BriefCaseOpened();
+            }
+        }
+
+        if (boatBriefCase.isBriefcaseOpened)
+        {
+            currentDurability = 0; // Set durability to 0 when briefcase is opened
         }
 
     }
@@ -91,6 +107,7 @@ public class BoatDurability : MonoBehaviour
             isBoatColliding = true;
             HandleDurability();
             BoatShake();
+            boatCrashSound.Play();
         }
     }
 
@@ -98,7 +115,7 @@ public class BoatDurability : MonoBehaviour
     {
         if (other.CompareTag("Obstacle") || other.CompareTag("Shark") && isBoatColliding)
         {
-
+            
         }
     }
 
@@ -115,6 +132,11 @@ public class BoatDurability : MonoBehaviour
     public void GameOver()
     {
         BoatDestroyedUI.SetActive(true);
+    }
+
+    private void BriefCaseOpened()
+    {
+        BriefcaseOpenedUI.SetActive(true);
     }
 
     void HandleDurability()
@@ -198,9 +220,7 @@ public class BoatDurability : MonoBehaviour
 
             yield return null;
         }
-
         EOTCollider.enabled = false; 
         boatBuoyancy.buoyancyStrength = 0f; // fully sunk
     }
-
 }
