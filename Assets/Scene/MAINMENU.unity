@@ -2032,7 +2032,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1960041059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5221011}
+  m_AnchorMin: {x: 0, y: 0.5774734}
   m_AnchorMax: {x: 1, y: 0.9999998}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -5529,8 +5529,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 389232602}
   m_HandleRect: {fileID: 389232601}
   m_Direction: 2
-  m_Value: 0.99999964
-  m_Size: 0.47789872
+  m_Value: 0.9999997
+  m_Size: 0.42252642
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6703,17 +6703,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1143413571}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 77638811}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Credits
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1898460448}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
@@ -8180,7 +8180,10 @@ MonoBehaviour:
   wobbleAngle: 2
   seaAmbience: {fileID: 1629883751}
   underwaterAmbience: {fileID: 1210441811}
+  boatEngine: {fileID: 0}
   BoatDestroyedUI: {fileID: 0}
+  krakenSlapCollider: {fileID: 0}
+  krakenFollow: {fileID: 0}
   isBoatDestroyed: 0
 --- !u!114 &1720569046
 MonoBehaviour:
@@ -8239,6 +8242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unchartedMapDuration: 5
   unchartedMapUI: {fileID: 0}
+  krakenSpotUI: {fileID: 0}
   kraken: {fileID: 0}
   krakenAnimator: {fileID: 0}
   volumeProfile: {fileID: 0}
@@ -9258,7 +9262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2471}
+  m_AnchoredPosition: {x: 0, y: -2752}
   m_SizeDelta: {x: 2321.9, y: 641.533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1824829095
@@ -9332,7 +9336,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00044818808}
-  m_SizeDelta: {x: 0, y: 2438.366}
+  m_SizeDelta: {x: 0, y: 2757.915}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1880022861
 GameObject:
